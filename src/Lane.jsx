@@ -7,7 +7,7 @@ import {
 } from "@dnd-kit/sortable";
 import Task from "./Task";
 
-export default function Lane({ id, tasks, title }) {
+export default function Lane({ id, tasks, title, deleteItem }) {
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -24,7 +24,13 @@ export default function Lane({ id, tasks, title }) {
           {title}
         </Heading>
         {tasks.map((task, index) => (
-          <Task key={index} id={task.title} title={task.title} category={id} />
+          <Task
+            key={index}
+            id={task.title}
+            title={task.title}
+            category={id}
+            deleteItem={deleteItem}
+          />
         ))}
       </Container>
     </SortableContext>

@@ -36,18 +36,19 @@ function App() {
         })
       );
     }
-    if (laneID === over.id) {
-      console.log(event);
-    }
   }
 
   function addItem(unTrimmedTitle) {
     const title = unTrimmedTitle.trim();
-    console.log(title);
+
     if (title) {
       const newItem = { listId: 1, title };
       setAllItems([newItem, ...allItems]);
     }
+  }
+
+  function deleteItem(titleToDelete) {
+    setAllItems(() => allItems.filter((item) => item.title !== titleToDelete));
   }
 
   useEffect(() => {
@@ -80,9 +81,24 @@ function App() {
           alignItems="center"
           minH="30rem"
         >
-          <Lane id={1} title="To Do" tasks={laneOneItems} />
-          <Lane id={2} title="In Progress" tasks={laneTwoItems} />
-          <Lane id={3} title="Done" tasks={laneThreeItems} />
+          <Lane
+            id={1}
+            title="To Do"
+            tasks={laneOneItems}
+            deleteItem={deleteItem}
+          />
+          <Lane
+            id={2}
+            title="In Progress"
+            tasks={laneTwoItems}
+            deleteItem={deleteItem}
+          />
+          <Lane
+            id={3}
+            title="Done"
+            tasks={laneThreeItems}
+            deleteItem={deleteItem}
+          />
         </Stack>
       </DndContext>
       <AddItem addItem={addItem} />
