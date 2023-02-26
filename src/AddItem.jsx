@@ -17,15 +17,27 @@ function AddItem({ addItem }) {
   }
 
   return (
-    <VStack bg="gray.100" textAlign="center" py="2rem" minH="15rem" maxH="100%">
+    <VStack
+      bg="gray.100"
+      mx="5rem"
+      mt="2rem"
+      mb="2rem"
+      textAlign="center"
+      py="2rem"
+      minH="15rem"
+      maxH="100%"
+      shadow="xl"
+    >
       <Heading as="h3" fontSize="2xl" fontWeight="500">
         Add an Item
       </Heading>
       <form onSubmit={handleSubmit}>
         <FormControl
-          px="1rem"
+          p="1rem"
+          mt="0.5rem"
+          mb="2rem"
           onChange={(e) => setTitle(e.target.value)}
-          as="textarea"
+          as="input"
           name="title"
           value={title}
         />

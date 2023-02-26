@@ -8,6 +8,9 @@ import {
 import Task from "./Task";
 
 export default function Lane({ id, tasks, title, deleteItem }) {
+  //By setting the id property here and passing setNodeRef to the container below
+  //It is possible to compare the id of this droppable element to the categories of the tasks being dragged onto it.
+
   const { setNodeRef } = useDroppable({
     id,
   });
@@ -17,8 +20,10 @@ export default function Lane({ id, tasks, title, deleteItem }) {
         minH={{ base: "4rem", lg: "30rem" }}
         p="1rem"
         rounded="md"
-        bg="gray.50"
+        bg="white"
         ref={setNodeRef}
+        border="1px"
+        borderColor="gray.200"
       >
         <Heading fontSize="2xl" fontWeight="500" textAlign="center" mb="2rem">
           {title}
