@@ -12,6 +12,7 @@ export default function Task({ title, id, category, deleteItem }) {
   });
   const style = {
     transform: CSS.Translate.toString(transform),
+    "touch-action": "none",
   };
 
   function handleDelete(event) {
