@@ -7,12 +7,12 @@ import {
 } from "@dnd-kit/sortable";
 import Task from "./Task";
 
-export default function Lane({ id, tasks, title, deleteItem }) {
+export default function Lane({ laneId, tasks, title, deleteItem }) {
   //By setting the id property here and passing setNodeRef to the container below
   //It is possible to compare the id of this droppable element to the categories of the tasks being dragged onto it.
 
   const { setNodeRef } = useDroppable({
-    id,
+    id: laneId,
   });
   return (
     <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
@@ -24,6 +24,7 @@ export default function Lane({ id, tasks, title, deleteItem }) {
         ref={setNodeRef}
         border="1px"
         borderColor="gray.200"
+        shadow="lg"
       >
         <Heading fontSize="2xl" fontWeight="500" textAlign="center" mb="2rem">
           {title}
@@ -31,9 +32,9 @@ export default function Lane({ id, tasks, title, deleteItem }) {
         {tasks.map((task, index) => (
           <Task
             key={index}
-            id={task.title}
+            id={task.id}
             title={task.title}
-            category={id}
+            category={laneId}
             deleteItem={deleteItem}
           />
         ))}

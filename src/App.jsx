@@ -13,23 +13,29 @@ import {
 import Lane from "./Lane";
 import AddItem from "./AddItem";
 
-//Static data for example tasks
-const itemsList = [
-  { listId: 1, title: "Build kaban board" },
-  { listId: 2, title: "Make droppable component" },
-  { listId: 3, title: "Make draggable component" },
-  { listId: 1, title: "Use dnd-kit library" },
-  { listId: 2, title: "Use Charka-ui libary" },
-  { listId: 3, title: "Use vite as build tool" },
-];
+//I know this isn't the best way do to this, but thought it would be fine given the project timeline.
+//Dummy data has id's 1-6 so these will start at 7. I would probably use DB ids in a real implementation.
+let newId = 7;
 
 function App() {
   //List of all tasks will be sorted in to each Kanban lane
-  const [allItems, setAllItems] = useState(itemsList);
+
+  const [allItems, setAllItems] = useState([]);
   //Kanban lanes will recieve filtered lists from useEffect below
   const [laneOneItems, setLaneOneItems] = useState([]);
   const [laneTwoItems, setLaneTwoItems] = useState([]);
   const [laneThreeItems, setLaneThreeItems] = useState([]);
+
+  //Get data from JSON file
+  async function getItems() {
+    try {
+      const response = await import("./data/tasks");
+
+      setAllItems(response.default);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   //This function compares the category property from the individual tasks to the Kanban Lane Ids
   //The indivdual task that was dragged will then have its lineId property to the new lane
@@ -41,7 +47,7 @@ function App() {
     if (laneID !== over.id) {
       setAllItems(
         allItems.map((item) => {
-          if (item.title === active.id) {
+          if (item.id === active.id) {
             item.listId = over.id;
             return item;
           } else {
@@ -57,15 +63,22 @@ function App() {
     const title = unTrimmedTitle.trim();
 
     if (title) {
-      const newItem = { listId: 1, title };
+      const newItem = { id: newId, listId: 1, title };
+      newId += 1;
       setAllItems([newItem, ...allItems]);
     }
   }
 
-  function deleteItem(titleToDelete) {
-    setAllItems(() => allItems.filter((item) => item.title !== titleToDelete));
+  function deleteItem(id) {
+    setAllItems(() => allItems.filter((item) => item.id !== id));
   }
 
+  //First useEffect only fires on mount to get dummy data from JSON file
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  //Second useEffect fires everytime allItems list changes, to filter lane lists.
   useEffect(() => {
     setLaneOneItems(() => allItems.filter((item) => item.listId === 1));
     setLaneTwoItems(() => allItems.filter((item) => item.listId === 2));
@@ -74,7 +87,13 @@ function App() {
 
   return (
     <Box>
-      <Box borderTop="1px" borderBottom="1px" mt="3rem" mx="5rem" mb="2rem">
+      <Box
+        borderTop="1px"
+        borderBottom="1px"
+        mt="3rem"
+        mx={{ base: "2%", lg: "15%" }}
+        mb="2rem"
+      >
         <Heading
           fontSize="7xl"
           letterSpacing="0.1rem"
@@ -105,27 +124,27 @@ function App() {
           bg="#fcd307"
           spacing="2rem"
           py="5rem"
-          px="15%"
+          px={{ base: "5%", lg: "15%" }}
           justifyContent="center"
           alignItems="center"
           minH="30rem"
-          mx="5rem"
-          shadow="2xl"
+          mx={{ base: "2%", lg: "15%" }}
+          shadow="xl"
         >
           <Lane
-            id={1}
+            laneId={1}
             title="To Do"
             tasks={laneOneItems}
             deleteItem={deleteItem}
           />
           <Lane
-            id={2}
+            laneId={2}
             title="In Progress"
             tasks={laneTwoItems}
             deleteItem={deleteItem}
           />
           <Lane
-            id={3}
+            laneId={3}
             title="Done"
             tasks={laneThreeItems}
             deleteItem={deleteItem}

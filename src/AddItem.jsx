@@ -14,12 +14,13 @@ function AddItem({ addItem }) {
   function handleSubmit(event) {
     event.preventDefault();
     addItem(title);
+    setTitle("");
   }
 
   return (
     <VStack
       bg="gray.100"
-      mx="5rem"
+      mx={{ base: "2%", lg: "15%" }}
       mt="2rem"
       mb="2rem"
       textAlign="center"

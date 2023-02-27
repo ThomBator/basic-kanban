@@ -1,0 +1,8 @@
+[
+  { "id": 1, "listId": 1, "title": "Build kanban board" },
+  { "id": 2, "listId": 2, "title": "Make droppable component" },
+  { "id": 3, "listId": 3, "title": "Make draggable component" },
+  { "id": 4, "listId": 1, "title": "Use dnd-kit library" },
+  { "id": 5, "listId": 2, "title": "Use Charka-ui libary" },
+  { "id": 6, "listId": 3, "title": "Use vite as build tool" }
+]
