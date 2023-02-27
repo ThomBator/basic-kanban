@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DndContext, rectIntersection, closestCenter } from "@dnd-kit/core";
+import { DndContext, rectIntersection } from "@dnd-kit/core";
 import {
   Box,
   Container,
@@ -86,49 +86,42 @@ function App() {
   }, [allItems]);
 
   return (
-    <Box>
-      <Box
-        borderTop="1px"
-        borderBottom="1px"
-        mt="3rem"
-        mx={{ base: "2%", lg: "15%" }}
-        mb="2rem"
-      >
-        <Heading
-          fontSize="7xl"
-          letterSpacing="0.1rem"
-          textAlign="center"
-          fontWeight="500"
-          pt="3rem"
-        >
-          Stellar Kanban Board
-        </Heading>
-        <Text
-          textAlign="center"
-          fontWeight="500"
-          fontSize="lg"
-          mx="auto"
-          mt="1rem"
-          mb="2rem"
-          maxW="72%"
-        >
-          Welcome to Stellar Kanban Board! Drag items to "In Progress" and
-          "Done" as you make progress. You can add new items using the form
-          below the Kanban Lanes. Click on the trash can to delete any items.
-        </Text>
-      </Box>
+    <DndContext collisionDetection={rectIntersection} onDragEnd={handleDragEnd}>
+      <Box mx={{ base: "2%", lg: "15%" }}>
+        <Box borderTop="1px" borderBottom="1px" mt="3rem" mb="2rem">
+          <Heading
+            fontSize="7xl"
+            letterSpacing="0.1rem"
+            textAlign="center"
+            fontWeight="500"
+            pt="3rem"
+          >
+            Stellar Kanban Board
+          </Heading>
+          <Text
+            textAlign="center"
+            fontWeight="500"
+            fontSize="lg"
+            mx="auto"
+            mt="1rem"
+            mb="2rem"
+            maxW="72%"
+          >
+            Welcome to Stellar Kanban Board! Drag items to "In Progress" and
+            "Done" as you make progress. You can add new items using the form
+            below the Kanban Lanes. Click on the trash can to delete any items.
+          </Text>
+        </Box>
 
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <Stack
           direction={{ base: "column", lg: "row" }}
           bg="#fcd307"
-          spacing="2rem"
+          spacing="3rem"
           py="5rem"
           px={{ base: "5%", lg: "15%" }}
           justifyContent="center"
           alignItems="center"
           minH="30rem"
-          mx={{ base: "2%", lg: "15%" }}
           shadow="xl"
         >
           <Lane
@@ -150,9 +143,10 @@ function App() {
             deleteItem={deleteItem}
           />
         </Stack>
-      </DndContext>
-      <AddItem addItem={addItem} />
-    </Box>
+
+        <AddItem addItem={addItem} />
+      </Box>
+    </DndContext>
   );
 
   const [items, setItems] = useState();

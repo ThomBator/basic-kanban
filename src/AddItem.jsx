@@ -20,7 +20,6 @@ function AddItem({ addItem }) {
   return (
     <VStack
       bg="gray.100"
-      mx={{ base: "2%", lg: "15%" }}
       mt="2rem"
       mb="2rem"
       textAlign="center"
