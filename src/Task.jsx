@@ -16,24 +16,34 @@ export default function Task({ title, id, category, deleteItem }) {
 
   function handleDelete(event) {
     event.preventDefault();
-    deleteItem(id);
+    const confirm = window.confirm("Are you sure you want to delete?");
+    if (confirm) {
+      deleteItem(id);
+    }
   }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card mb="1rem" p="1rem" mx="0.5rem" bg="#ededed">
-        <HStack justifyContent="space-between">
-          <Text>{title}</Text>
-          <form onSubmit={handleDelete}>
-            <IconButton
-              type="submit"
-              bg="#ededed"
-              aria-label="delete item"
-              icon={<DeleteIcon />}
-            />
-          </form>
-        </HStack>
-      </Card>
-    </div>
+    <Card
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      mb="1rem"
+      p="1rem"
+      mx="0.5rem"
+      bg="#ededed"
+    >
+      <HStack justifyContent="space-between">
+        <Text>{title}</Text>
+        <form onSubmit={handleDelete}>
+          <IconButton
+            type="submit"
+            bg="#ededed"
+            aria-label="delete item"
+            icon={<DeleteIcon />}
+          />
+        </form>
+      </HStack>
+    </Card>
   );
 }
